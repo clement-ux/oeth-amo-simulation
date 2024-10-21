@@ -91,7 +91,7 @@ contract SimulateSwapOldPool is Test {
 
         // Swap
         uint256 amountIn = getAmountToSwap(swapPct);
-        
+
         vm.startSnapshotGas(
             string.concat("A: ", vm.toString(aFactor), " AMO: ", vm.toString(amoPct), " SWAP: ", vm.toString(swapPct))
         );
