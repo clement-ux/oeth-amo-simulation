@@ -2,19 +2,21 @@ import json
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 
+# Only "New" or "Old"
+POOL_NAME = "Old" 
+
 # Load data (unchanged)
-with open('../test/json/SimulateSwapNewPool_Input.json', "r") as file:
+with open('../test/json/SimulateSwap'+POOL_NAME+'Pool_Input.json', "r") as file:
     input = json.load(file)
 
-with open('../test/json/SimulateSwapNewPool_Output.json', "r") as file:
+with open('../test/json/SimulateSwap'+POOL_NAME+'Pool_Output.json', "r") as file:
     output = json.load(file)
 
 def convert_pct_to_share(pct):
-    total = pct / 1e18 + 1
-    pct_token_1 = (pct / 1e18) / total * 100
-    pct_token_0 = f"{100 - pct_token_1:.0f}"
-    pct_token_1 = f"{pct_token_1:.0f}"
-    return f"{pct_token_0}/{pct_token_1}"
+    pct_token0 = 1
+    pct_token1 = 1 + pct / 1e18
+    total = pct_token0 + pct_token1
+    return f"{pct_token0 * 100 / total:.0f}"+"/"+f"{pct_token1 * 100 / total:.0f}"
 
 # Get data
 KEYS = [K for K in input.keys()]
@@ -38,7 +40,7 @@ for i in range(len(A_FACTORS)):
     
     for j in range(len(AMO_PCT)):
         y_data = output[str(A_FACTORS[i])][f"{AMO_PCT[j]:.0f}"]
-        ax.plot(X, y_data, label=convert_pct_to_share(AMO_PCT[j]), linewidth=1.5)
+        ax.plot(X, y_data, label=convert_pct_to_share(AMO_PCT[j]), linewidth=0.8)
         
         y_min = min(y_min, min(y_data))
         y_max = max(y_max, max(y_data))
@@ -63,4 +65,4 @@ fig.suptitle("Comparison of % Obtained vs % of Pool Swapped for Different A Fact
 plt.tight_layout(rect=[0, 0.03, 0.85, 0.95])
 
 # Save the figure
-plt.savefig("./png/SwapComparisonNewPool.png", dpi=300, bbox_inches='tight')
+plt.savefig('./png/SwapComparison'+POOL_NAME+'Pool.png', dpi=300, bbox_inches='tight')
