@@ -1,6 +1,25 @@
 [profile.default]
 src = "src"
 out = "out"
-libs = ["lib"]
+libs = ["dependencies"]
+verbosity = 3
+evm_version="shanghai"
+remappings = ["forge-std/=dependencies/forge-std-1.9.3/src/"]
+fs_permissions = [{ access = "read-write", path = "./"}]
+gas_reports = ["SimulateSwapNewPool", "SimulateSwapOldPool"]
+
+[dependencies]
+forge-std = { version = "1.9.3", git = "https://github.com/foundry-rs/forge-std.git", rev = "1de6eecf821de7fe2c908cc48d3ab3dced20717f" }
+
+[soldeer]
+recursive_deps = false
+remappings_version = false
+remappings_generate = false
+remappings_regenerate = false
+remappings_prefix = "@"
+remappings_location = "config"
+
+[rpc_endpoints]
+mainnet = "${PROVIDER_URL_MAINNET}"
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
