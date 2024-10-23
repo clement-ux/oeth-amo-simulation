@@ -39,4 +39,7 @@ axis.set_xlabel("A factor", fontsize=12)
 axis.set_ylabel("Price", fontsize=12)
 
 fig.legend()
-plt.show()
+
+#plt.show()
+# Save the figure
+plt.savefig('./png/GetPrice.png', dpi=300, bbox_inches='tight')
